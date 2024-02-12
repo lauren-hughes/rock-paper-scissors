@@ -16,3 +16,11 @@ function getPlayerChoice() {
     // When a valid choice has been made, return it
     return playerChoice;
 }
+
+function getComputerChoice() {
+    // Generates random number from 0 to 2
+    let random = Math.floor(Math.random() * 3);
+    // Selects rock, paper or scissors from the CHOICES array using the random number
+    let computerChoice = CHOICES[random];
+    return computerChoice;
+}
