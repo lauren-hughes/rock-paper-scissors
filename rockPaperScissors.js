@@ -24,3 +24,50 @@ function getComputerChoice() {
     let computerChoice = CHOICES[random];
     return computerChoice;
 }
+
+function playRound(playerChoice, computerChoice) {
+    let outcome;
+
+    // Don't have to check for a tie in any else-if/else block
+    if (playerChoice === computerChoice) {
+        outcome = "tie";
+    }
+    else if (playerChoice === "rock") {
+        // If computerChoice is paper, player loses
+        // If computerChoice is not paper (scissors), player wins
+        outcome = (computerChoice === "paper") ? "lose" : "win";
+    }
+    else if (playerChoice === "paper") {
+        // If computerChoice is rock, player wins
+        // If computerChoice is not rock (scissors), play loses
+        outcome = (computerChoice === "rock") ? "win" : "lose";
+    }
+    // playerChoice must be scissors
+    else {
+        // If computerChoice is rock, player loses
+        // If computerChoice is not rock (paper), player wins
+        outcome = (computerChoice === "rock") ? "lose" : "win";
+    }
+
+    // Displays round winner message to the console
+    displayRoundWinner(outcome, playerChoice, computerChoice);
+    return outcome;
+}
+
+function displayRoundWinner(outcome, playerChoice, computerChoice) {
+    if (outcome === "tie") {
+        // Capitalise first word in new sentence
+        playerChoiceCapitalised = playerChoice[0].toUpperCase() + playerChoice.slice(1);
+        console.log(`It's a tie! ${playerChoiceCapitalised} versus ${computerChoice}`);
+    }
+    else if (outcome === "win") {
+        // Capitalise first word in new sentence
+        playerChoiceCapitalised = playerChoice[0].toUpperCase() + playerChoice.slice(1);
+        console.log(`You win! ${playerChoiceCapitalised} beats ${computerChoice}`);
+    }
+    else {
+        // Capitalise first word in new sentence
+        computerChoiceCapitalised = computerChoice[0].toUpperCase() + computerChoice.slice(1);
+        console.log(`You lose! ${computerChoiceCapitalised} beats ${playerChoice}`);
+    }
+}
