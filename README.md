@@ -1,1 +1,2 @@
 # rock-paper-scissors
+This project was created as part of [The Odin Project](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors). It involved creating a best of five rock, paper, scissors simulation against the computer. The player is prompted to enter rock, paper or scissors. The results of each round are printed to the console. The overall winner following at least three rounds is also printed to the console. The project serves as a brief demonstration of some introductory JavaScript skills.
