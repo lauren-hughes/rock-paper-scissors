@@ -1,21 +1,7 @@
 const CHOICES = ["rock", "paper", "scissors"];
 
-function getPlayerChoice() {
-    let playerChoice;
-    // Keep going while playerChoice is not in the CHOICES array (i.e., is not a valid response)
-    while (!(CHOICES.includes(playerChoice))) {
-        // Prompt the player to enter rock, paper or scissors (they can enter anything though)
-        playerChoice = prompt("Best of five! Rock, paper or scissors?");
-
-        // This prevents the program from trying to convert null to lower case (if the player clicks cancel)
-        if (playerChoice) {
-            // Convert choice to lower case for comparison purposes
-            playerChoice = playerChoice.toLowerCase();
-        }
-    }
-    // When a valid choice has been made, return it
-    return playerChoice;
-}
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => button.addEventListener("click", playRound));
 
 function getComputerChoice() {
     // Generates random number from 0 to 2
@@ -25,9 +11,13 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-function playRound(playerChoice, computerChoice) {
+function playRound(event) {
     let outcome;
 
+    // This works because an Event object is passed to the callback function in an event listener
+    let playerChoice = event.target.id;
+    let computerChoice = getComputerChoice();
+    
     // Don't have to check for a tie in any else-if/else block
     if (playerChoice === computerChoice) {
         outcome = "tie";
@@ -55,21 +45,31 @@ function playRound(playerChoice, computerChoice) {
 }
 
 function displayRoundWinner(outcome, playerChoice, computerChoice) {
+    let winnerDisplay = document.querySelector(".winner-display");
+
+    if (winnerDisplay === null) {
+        winnerDisplay = document.createElement("p");
+        winnerDisplay.classList.add("winner-display");
+    }
+
     if (outcome === "tie") {
         // Capitalise first word in new sentence
         playerChoiceCapitalised = playerChoice[0].toUpperCase() + playerChoice.slice(1);
-        console.log(`It's a tie! ${playerChoiceCapitalised} versus ${computerChoice}`);
+        winnerDisplay.textContent = `It's a tie! ${playerChoiceCapitalised} versus ${computerChoice}`;
     }
     else if (outcome === "win") {
         // Capitalise first word in new sentence
         playerChoiceCapitalised = playerChoice[0].toUpperCase() + playerChoice.slice(1);
-        console.log(`You win! ${playerChoiceCapitalised} beats ${computerChoice}`);
+        winnerDisplay.textContent = `You win! ${playerChoiceCapitalised} beats ${computerChoice}`;
     }
     else {
         // Capitalise first word in new sentence
         computerChoiceCapitalised = computerChoice[0].toUpperCase() + computerChoice.slice(1);
-        console.log(`You lose! ${computerChoiceCapitalised} beats ${playerChoice}`);
+        winnerDisplay.textContent = `You lose! ${computerChoiceCapitalised} beats ${playerChoice}`;
     }
+
+    const container = document.querySelector("#container");
+    container.appendChild(winnerDisplay);
 }
 
 function playGame() {
@@ -104,5 +104,3 @@ function displayGameWinner(playerWins, computerWins) {
 
     console.log(message);
 }
-
-playGame();
