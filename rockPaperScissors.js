@@ -87,35 +87,15 @@ function updateScore(outcome) {
         let scoreDisplay = document.querySelector("#computer-score");
         scoreDisplay.textContent = "Computer: " + ++computerScore;
     }
+
+    if (playerScore === 5 || computerScore === 5) displayGameWinner();
 }
 
-function playGame() {
-    let roundOutcome;
+function displayGameWinner() {
+    let container = document.querySelector("#container");
 
-    // Game is best of 5, so must win 3 rounds to win game
-    while (playerWins < 3 && computerWins < 3) {
-        // Returns "win" if player wins or "lose" if player loses
-        roundOutcome = playRound(getPlayerChoice(), getComputerChoice());
+    let winnerDisplay = document.createElement("p");
+    winnerDisplay.textContent = (playerScore > computerScore) ? "Five rounds won. You win the game!" : "Five rounds won. Computer wins the game!";
 
-        if (roundOutcome === "win") {
-            playerWins++;
-        }
-        else if (roundOutcome === "lose") {
-            computerWins++;
-        }
-    }
-
-    // Displays game winner message to the console
-    displayGameWinner(playerWins, computerWins);
-}
-
-function displayGameWinner(playerWins, computerWins) {
-    if (playerWins > computerWins) {
-        message = `You win! ${playerWins} rounds to ${computerWins}`;
-    }
-    else {
-        message = `Computer wins! ${computerWins} rounds to ${playerWins}`;
-    }
-
-    console.log(message);
+    container.appendChild(winnerDisplay);
 }
