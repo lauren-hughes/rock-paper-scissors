@@ -3,6 +3,9 @@ const CHOICES = ["rock", "paper", "scissors"];
 const buttons = document.querySelectorAll("button");
 buttons.forEach(button => button.addEventListener("click", playRound));
 
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     // Generates random number from 0 to 2
     let random = Math.floor(Math.random() * 3);
@@ -41,6 +44,9 @@ function playRound(event) {
 
     // Displays round winner message to the console
     displayRoundWinner(outcome, playerChoice, computerChoice);
+
+    updateScore(outcome);
+
     return outcome;
 }
 
@@ -72,9 +78,18 @@ function displayRoundWinner(outcome, playerChoice, computerChoice) {
     container.appendChild(winnerDisplay);
 }
 
+function updateScore(outcome) {
+    if (outcome === "win") {
+        let scoreDisplay = document.querySelector("#player-score");
+        scoreDisplay.textContent = "You: " + ++playerScore;
+    }
+    else if (outcome === "lose") {
+        let scoreDisplay = document.querySelector("#computer-score");
+        scoreDisplay.textContent = "Computer: " + ++computerScore;
+    }
+}
+
 function playGame() {
-    let playerWins = 0;
-    let computerWins = 0;
     let roundOutcome;
 
     // Game is best of 5, so must win 3 rounds to win game
