@@ -42,20 +42,17 @@ function playRound(event) {
         outcome = (computerChoice === "rock") ? "lose" : "win";
     }
 
-    // Displays round winner message to the console
     displayRoundWinner(outcome, playerChoice, computerChoice);
 
     updateScore(outcome);
-
-    return outcome;
 }
 
 function displayRoundWinner(outcome, playerChoice, computerChoice) {
-    let winnerDisplay = document.querySelector(".winner-display");
+    let winnerDisplay = document.querySelector(".round-winner");
 
     if (winnerDisplay === null) {
         winnerDisplay = document.createElement("p");
-        winnerDisplay.classList.add("winner-display");
+        winnerDisplay.classList.add("round-winner");
     }
 
     if (outcome === "tie") {
@@ -79,22 +76,34 @@ function displayRoundWinner(outcome, playerChoice, computerChoice) {
 }
 
 function updateScore(outcome) {
+    let playerScoreDisplay = document.querySelector("#player-score");
+    let computerScoreDisplay = document.querySelector("#computer-score");
+
     if (outcome === "win") {
-        let scoreDisplay = document.querySelector("#player-score");
-        scoreDisplay.textContent = "You: " + ++playerScore;
+        playerScoreDisplay.textContent = "You: " + ++playerScore;
     }
     else if (outcome === "lose") {
-        let scoreDisplay = document.querySelector("#computer-score");
-        scoreDisplay.textContent = "Computer: " + ++computerScore;
+        computerScoreDisplay.textContent = "Computer: " + ++computerScore;
+    }
+    else if (outcome === "reset") {
+        playerScoreDisplay.textContent = "You: " + playerScore;
+        computerScoreDisplay.textContent = "Computer: " + computerScore;
     }
 
-    if (playerScore === 5 || computerScore === 5) displayGameWinner();
+    if (playerScore === 5 || computerScore === 5) endGame();
+}
+
+function endGame() {
+    displayGameWinner();
+
+    buttons.forEach(button => button.disabled = true);
 }
 
 function displayGameWinner() {
     let container = document.querySelector("#container");
 
     let winnerDisplay = document.createElement("p");
+    winnerDisplay.classList.add("game-winner");
     winnerDisplay.textContent = (playerScore > computerScore) ? "Five rounds won. You win the game!" : "Five rounds won. Computer wins the game!";
 
     container.appendChild(winnerDisplay);
