@@ -97,6 +97,13 @@ function endGame() {
     displayGameWinner();
 
     buttons.forEach(button => button.disabled = true);
+
+    let playAgainButton = document.createElement("button");
+    playAgainButton.textContent = "Play again";
+    playAgainButton.addEventListener("click", resetGame);
+
+    let container = document.querySelector("#container");
+    container.appendChild(playAgainButton);
 }
 
 function displayGameWinner() {
@@ -107,4 +114,19 @@ function displayGameWinner() {
     winnerDisplay.textContent = (playerScore > computerScore) ? "Five rounds won. You win the game!" : "Five rounds won. Computer wins the game!";
 
     container.appendChild(winnerDisplay);
+}
+
+function resetGame(event) {
+    playerScore = 0;
+    computerScore = 0;
+    updateScore("reset");
+
+    let roundWinnerDisplay = document.querySelector(".round-winner");
+    roundWinnerDisplay.remove();
+
+    let gameWinnerDisplay = document.querySelector(".game-winner");
+    gameWinnerDisplay.remove();
+
+    buttons.forEach(button => button.disabled = false);
+    event.target.remove();
 }
